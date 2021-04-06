@@ -1,0 +1,11 @@
+.cardframe {
+    text-align: center;
+}
+
+.cardposition {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    border: 2px red solid;
+    margin: 10px;
+}
