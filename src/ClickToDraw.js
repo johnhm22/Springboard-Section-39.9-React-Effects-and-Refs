@@ -37,11 +37,8 @@ const ClickToDraw = () => {
     }
     
     useEffect(() => {
-        console.log("useEffect called");
         async function drawCard() {
-            console.log("deckId in useEffect is: ", deckId);
             const res = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
-            console.log("image: ", res.data.cards[0].image);
             const card = res.data.cards[0].image
             addCard(card)
         }
