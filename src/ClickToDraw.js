@@ -3,9 +3,8 @@ import { v4 as uuid} from 'uuid';
 import axios from "axios";
 import'./ClickToDraw.css'
 
-const ClickToDraw = (props) => {
+const ClickToDraw = () => {
 
-    console.log("props: ", props);
     const deckRef = useRef();
     deckRef.current = 'c6scgn7h37wq'
     const deckId = deckRef.current;
@@ -25,6 +24,12 @@ const ClickToDraw = (props) => {
     
     const [cards, setCards] = useState(INITIAL_STATE);
 
+    const [total, setTotal] = useState(52);
+
+    const newCard = () => {
+        setTotal(total => total -1)
+    }
+
     // console.log("cards: ", cards);
 
     const addCard = card => {
@@ -38,17 +43,18 @@ const ClickToDraw = (props) => {
             const res = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
             console.log("image: ", res.data.cards[0].image);
             const card = res.data.cards[0].image
-            console.log("props.total is now: ", props.total)
             addCard(card)
         }
         drawCard();
-    },[props.total, deckId])
+    },[total, deckId])
 
     // <button onClick={handleNewCard}>Draw card</button>
 
 
     return (
         <div className="cardframe">
+            <button onClick={newCard}>Draw card</button>
+            {total === 0 && <h3>No cards remaining</h3>}
             {cards.map(c => (
                 <div className="cardpostion">
                     <img alt="A selection of playing cards" src={c.card}></img>
